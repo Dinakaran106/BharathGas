@@ -1,0 +1,23 @@
+package gassupplier;
+
+import gasbooking.BookingGas;
+import gasbooking.Delivery;
+import gassupplier.GasSupplier;
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a new gas connection for a customer
+        BookingGas customer1 = new BookingGas("John Doe", "CUST001", "123 Main St", 9876543210l, 2);
+
+        // Validate the booking
+        customer1.validate();
+
+        // Display gas supplier details
+        GasSupplier supplier = new GasSupplier() {}; // Anonymous class implementing GasSupplier interface
+        supplier.display();
+
+        // Delivery process
+        Delivery delivery1 = new Delivery("John Doe", "CUST001", "123 Main St", 9876543210l, 2, "SHANMUGAM . R", "EKKATUTHANGAL", 9098096570L, BookingGas.OTP);
+        delivery1.checkOTPAndDeliver();
+    }
+}
