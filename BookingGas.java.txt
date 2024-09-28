@@ -1,0 +1,69 @@
+package gasbooking;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
+import java.util.Scanner;
+
+import customer.GasConnection;
+
+public class BookingGas extends GasConnection {
+	static Random r = new Random();
+	public static int OTP = 1000 + r.nextInt(9000);
+	double Amount = 800.0;
+	double Refund = 0.0;
+	public static String status ="";
+    LocalDate d = LocalDate.now();
+    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd ");
+	public BookingGas(String name, String cust_ID, String address, long phn_no, int number_of_cylinders) {
+		super(name, cust_ID, address, phn_no, number_of_cylinders);
+		System.out.println("BOOKED ON: " + f.format(d));
+		System.out.println("Your OTP is: " + OTP);
+	}
+	public void validate() {
+		Period difference= Period.between(GasConnection.getDate(),d);
+		if(difference.getDays() >= 60) 
+		{
+			System.out.println("ELIGIBLE FOR BOOKING TWO CYLINDER");
+			String option=new Scanner(System.in).next();
+			System.out.println("DO YOU WANT TO  BOOK TWO CYLINDER[YES/NO] : " + option);
+			if(option.toUpperCase().equals("YES")) 
+			{
+				status ="BOOKED";
+				System.out.println("LAST DATE : "+ LocalDate.now().plusDays(60));
+				System.out.println("STATUS : " + status );
+				System.out.println("THANKYOU");
+			}
+			else {
+				System.out.println("DO YOU WANT TO  BOOK ONE CYLINDER[YES/NO] : " + option);
+				if(option.toUpperCase().equals("YES")) 
+				{
+				status ="BOOKED";
+				System.out.println("LAST DATE : "+ LocalDate.now().plusDays(30));
+				System.out.println("STATUS : " + status );
+				System.out.println("THANKYOU");
+				}
+				else {System.out.println("THANKYOU");}
+			}
+		}
+		else if(difference.getDays() >= 30){
+			System.out.println("ELIGIBLE FOR BOOKING ONE CYLINDER");
+			String option=new Scanner(System.in).next();
+			System.out.println("DO YOU WANT TO  BOOK ONE CYLINDER[YES/NO] : " + option);
+			if(option.toUpperCase().equals("YES")) 
+			{
+			status ="BOOKED";
+			System.out.println("LAST DATE : "+ LocalDate.now().plusDays(30));
+			System.out.println("STATUS : " + status );
+			System.out.println("THANKYOU");
+			}
+			else {System.out.println("THANKYOU");}
+		}
+		else {
+			System.out.println("NOT ELIGIBLE");
+			System.out.println("YOU ARE ELIGIBLE TO BOOK CYLINDER AFTER  : "+ (30-difference.getDays()) +"Days");
+		    System.out.println("THANKYOU");	
+		}
+	}
+	
+}
